@@ -103,7 +103,9 @@ namespace Laba5
         }
         private void bStart_Click(object sender, EventArgs e)
         {
-            byte[] inArr = File.ReadAllBytes(tInFilePath.Text); // читаємо байти з файлу
+            try
+            {
+                byte[] inArr = File.ReadAllBytes(tInFilePath.Text); // читаємо байти з файлу
             File.WriteAllBytes(tOutFilePath.Text, myEncoding(inArr)); // створюємо новий файл і записуємо у нього байти
 
             FileInfo fileIN = new FileInfo(tInFilePath.Text);
@@ -116,6 +118,11 @@ namespace Laba5
 
             string result = BitConverter.ToString(myEncoding(inArr)).Replace("-", "");
             MessageBox.Show(" У файлі записане число(контрольна сума вхідного файлу):\n" + result, "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void bClean_Click(object sender, EventArgs e)
         {
